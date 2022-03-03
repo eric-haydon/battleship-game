@@ -34,3 +34,29 @@
 // var stats = "You took " + guesses + " guess to sink the battleship, " + "which means your shooting accuracy was " + (3/guesses);
 
 // alert(stats);
+
+var view = {
+    displayMessage: function(msg) {
+        var messageArea = document.getElementById("messageArea");
+        messageArea.innerHTML = msg;
+    },
+    displayHit: function(location) {
+        var cell = document.getElementById(location);
+        cell.setAttribute("class", "hit");
+    },
+    displayMiss: function(location) {
+        var cell = document.getElementById(location);
+        cell.setAttribute("class", "miss");
+    }
+};
+
+// view.displayMiss("00");
+// view.displayHit("34");
+// view.displayMiss("55");
+// view.displayHit("12");
+// view.displayMiss("25");
+// view.displayHit("26");
+
+// view.displayMessage("tap tap, is this thing on?");
+
+var ships = [{locations: ["06", "16", "26"], hits: ["hit", "", ""]}, {locations: ["24", "34", "44"], hits: ["", "", ""]}, {locations: ["10", "11", "12"], hits: ["", "", ""]}];
