@@ -52,10 +52,13 @@ var model = {
 var controller = {
     guesses: 0,
     processGuess: function(guess) {
-        var location = parseGuess(guess);
+        var location = this.parseGuess(guess);
         if (location) {
             this.guesses++;
             var hit = model.fire(location);
+            if (hit && model.shipsSunk === model.numShips) {
+                view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses.");
+            }
         }
     },
     parseGuess: function(guess) {
@@ -78,8 +81,43 @@ var controller = {
     }
 }
 
+function init() {
+    var fireButton = document.getElementById("fireButton");
+    fireButton.onclick = handleFireButton;
+    var guessInput = document.getElementById("guessInput");
+    guessInput.onkeypress = handleKeyPress;
+}
+
+function handleFireButton() {
+    var guessInput = document.getElementById("guessInput");
+    var guess = guessInput.value;
+    controller.processGuess(guess);
+    guessInput.value = "";
+}
+
+function handleKeyPress (e) {
+    var fireButton = document.getElementById("fireButton");
+    if (e.keyCode === 13) {
+        fireButton.click();
+        return false;
+    }
+}
+
+window.onload = init;
+
 
 // !!test firing calls
+
+// controller.processGuess("A0");
+// controller.processGuess("A6");
+// controller.processGuess("B6");
+// controller.processGuess("C6");
+// controller.processGuess("C4");
+// controller.processGuess("D4");
+// controller.processGuess("E4");
+// controller.processGuess("B0");
+// controller.processGuess("B1");
+// controller.processGuess("B2");
 
 // model.fire("53");
 // model.fire("06");
@@ -92,11 +130,11 @@ var controller = {
 // model.fire("11");
 // model.fire("10");
 
-console.log(controller.parseGuess("A0"));
-console.log(controller.parseGuess("B6"));
-console.log(controller.parseGuess("G3"));
-console.log(controller.parseGuess("H0"));
-console.log(controller.parseGuess("A7"));
+// console.log(controller.parseGuess("A0"));
+// console.log(controller.parseGuess("B6"));
+// console.log(controller.parseGuess("G3"));
+// console.log(controller.parseGuess("H0"));
+// console.log(controller.parseGuess("A7"));
 
 // **first early version of BS**
 
