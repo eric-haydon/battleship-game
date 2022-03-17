@@ -63,10 +63,10 @@ var model = {
         var col;
         if (direction === 1) {
             row = Math.floor(Math.random() * this.boardSize);
-            col = Math.floor(Math.random() * (this.boardSize - (this.shipLength +1)));
+            col = Math.floor(Math.random() * (this.boardSize - (this.shipLength + 1)));
         } else {
             col = Math.floor(Math.random() * this.boardSize);
-            row = Math.floor(Math.random() * (this.boardSize - (this.shipLength +1)));
+            row = Math.floor(Math.random() * (this.boardSize - (this.shipLength + 1)));
         }
         var newShipLocations = [];
         for (var i = 0; i < this.shipLength; i++) {
@@ -89,23 +89,25 @@ var model = {
         }
         return false;
     }
-}
+};
 
 var controller = {
     guesses: 0,
     processGuess: function(guess) {
         var location = this.parseGuess(guess);
-        model.guessTracker.push(location);
         var guessLog = model.guessTracker.indexOf(location);
-        console.log("the guess log:" + guessLog);
-        console.log("and the guesses:" + this.guesses);
-        if (guessLog >= 0) {
+        console.log("the guess log: " + guessLog);
+        console.log("and the guesses: " + this.guesses);
+        console.log("guesstracker array is: " + model.guessTracker)
+        if (guessLog < 0 ) {
+            model.guessTracker.push(location);
             this.guesses++;
             var hit = model.fire(location);
             if (hit && model.shipsSunk === model.numShips) {
-                view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses.");
+                view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses. Reload to play again.");
             }
-        } else {
+        }
+        else {
             view.displayMessage("Repeated Guess, try again.");
         }
     },
